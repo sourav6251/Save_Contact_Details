@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../CSS/output.css" rel="stylesheet">
+    <title>Profile </title>
+</head>
+
+<body class="bg-gradient-to-br from-teal-400 via-pink-500 to-purple-700 min-h-screen font-sans" th:object="${user}">
+    <div th:replace="navbar :: navbar"></div>
+    <div class="max-w-4xl mx-auto px-4 py-8">
+
+        <!-- Profile Picture Section -->
+        <div class="flex items-center  " style="margin-left: 23rem;">
+            <!-- Photo Section -->
+            <div
+                class="h-24 w-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex justify-center items-center shadow-lg  ">
+                <span class="text-white font-semibold text-3xl">A</span>
+            </div>
+            <!-- Edit Icon Section -->
+            <button class="w-6 ml-20" style="margin-left: 23rem;">
+                <a href="/user/editProfile"><img src="../icon/edit.svg" alt="Edit"></a>
+
+            </button>
+        </div>
+
+        <!--//TODO: Profile Name Section -->
+        <div class="space-y-4 mt-4">
+            <div class="text-gray-700 text-sm font-medium uppercase ml-4">Name</div>
+            <div class="bg-white p-2 pl-4 rounded-lg shadow-lg">
+                <div class="flex justify-between items-center">
+                    <div class="text-gray-800 font-semibold text-lg">
+                        <span class="w-full" th:text="${name}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--//TODO: Profile Contact Number Section -->
+        <div class="space-y-4 mt-4">
+            <div class="text-gray-700 text-sm font-medium uppercase ml-4">Email</div>
+            <div class="bg-white p-2 pl-4 rounded-lg shadow-lg">
+                <div class="flex justify-between items-center">
+                    <div class="text-gray-800 font-semibold text-lg"><span class="w-full" th:text="${email}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--//TODO: Profile Password Section -->
+        <!-- <div class="space-y-4 mt-4">
+            <div class="text-gray-700 text-sm font-medium uppercase ml-4">Password</div>
+            <div class="bg-white p-2 pl-4 rounded-lg shadow-lg">
+                <div class="flex justify-between items-center">
+                    <div class="text-gray-800 font-semibold text-lg">
+                        <span class="w-full" th:text="${password}"></span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!--//TODO: Profile About Section -->
+        <div class="space-y-4 mt-4">
+            <div class="text-gray-700 text-sm font-medium uppercase ml-4">About</div>
+            <div class="bg-white p-2 pl-4 rounded-lg shadow-lg ">
+                    <div class="text-gray-800 font-semibold text-lg " >
+                        <span class="w-full" th:text="${about}" ></span>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
