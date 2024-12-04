@@ -18,7 +18,7 @@
 body {
   height: 100vh;
   width: 100vw;
-  background-color: aqua;
+  background-color: rgba(89, 143, 143, 0.397);
 }
 /* General reset */
 * {

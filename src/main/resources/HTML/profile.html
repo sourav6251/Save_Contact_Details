@@ -5,25 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../CSS/output.css" rel="stylesheet">
+    <script src="../JS/profilePhoto.js"></script>
     <title>Profile </title>
 </head>
 
-<body class="bg-gradient-to-br from-teal-400 via-pink-500 to-purple-700 min-h-screen font-sans" th:object="${user}">
+<body class="bg-gradient-to-br from-teal-400 via-pink-500 to-purple-700 min-h-screen font-sans" th:object="${users}">
     <div th:replace="navbar :: navbar"></div>
     <div class="max-w-4xl mx-auto px-4 py-8">
 
         <!-- Profile Picture Section -->
-        <div class="flex items-center  " style="margin-left: 23rem;">
+        <div class="flex justify-between " >
+            <div class="w-2 bg-transparent"></div>
             <!-- Photo Section -->
+            <!-- background-image: url(http://127.0.0.1:8080/icon/avatar.svg); -->
+            <span class="hidden " id="imageURL" th:text="${users.image_url}"></span>
             <div
-                class="h-24 w-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex justify-center items-center shadow-lg  ">
-                <span class="text-white font-semibold text-3xl">A</span>
+                style="
+                    background-size: cover;
+                    background-position: center;
+                    height: 6rem;
+                    width: 6rem;
+                    border: none;
+                    padding: 0;"
+                class="h-24 w-24 bg-gradient-to-r  rounded-full flex justify-center items-center shadow-lg  "
+                id="profile-photo">
+                
             </div>
-            <!-- Edit Icon Section -->
-            <button class="w-6 ml-20" style="margin-left: 23rem;">
-                <a href="/user/editProfile"><img src="../icon/edit.svg" alt="Edit"></a>
+            <!-- Edit Icon Section class="w-6 ml-20" -->
+            <div class="flex flex-col justify-between p-2">
+                <button >
+                    <a href="/user/editProfile"><img style="height: 1.5rem;"  src="../icon/edit.svg" alt="Edit"></a>
 
-            </button>
+                </button>
+                <div>
+                    <span><a href="/user/contact">Contact</a></span>
+                </div>
+            </div>
         </div>
 
         <!--//TODO: Profile Name Section -->
@@ -32,7 +49,7 @@
             <div class="bg-white p-2 pl-4 rounded-lg shadow-lg">
                 <div class="flex justify-between items-center">
                     <div class="text-gray-800 font-semibold text-lg">
-                        <span class="w-full" th:text="${name}"></span>
+                        <span class="w-full" th:text="${users.name}"></span>
                     </div>
                 </div>
             </div>
@@ -43,7 +60,7 @@
             <div class="text-gray-700 text-sm font-medium uppercase ml-4">Email</div>
             <div class="bg-white p-2 pl-4 rounded-lg shadow-lg">
                 <div class="flex justify-between items-center">
-                    <div class="text-gray-800 font-semibold text-lg"><span class="w-full" th:text="${email}"></span>
+                    <div class="text-gray-800 font-semibold text-lg"><span class="w-full" th:text="${users.email}"></span>
                     </div>
                 </div>
             </div>
@@ -65,9 +82,9 @@
         <div class="space-y-4 mt-4">
             <div class="text-gray-700 text-sm font-medium uppercase ml-4">About</div>
             <div class="bg-white p-2 pl-4 rounded-lg shadow-lg ">
-                    <div class="text-gray-800 font-semibold text-lg " >
-                        <span class="w-full" th:text="${about}" ></span>
-                    </div>
+                <div class="text-gray-800 font-semibold text-lg ">
+                    <span class="w-full" th:text="${users.about}"></span>
+                </div>
             </div>
         </div>
 

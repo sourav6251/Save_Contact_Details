@@ -1,19 +1,17 @@
 package com.contact.operation;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.contact.db.Contact;
 import com.contact.db.Users;
 import com.contact.dto.ContactData;
 import com.contact.dto.RegisterData;
 import com.contact.repository.ContactRepository;
 import com.contact.repository.UserRepository;
-
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //TODO:DB OPERATION
 
@@ -52,8 +50,8 @@ public class DBOperations {
      *
      * @param registerData The registration data for the new user.
      * @return "email" if the email address is already registered, "success" if the
-     *         registration was successful, or the exception message if an error
-     *         occurred.
+     * registration was successful, or the exception message if an error
+     * occurred.
      */
     public String register(RegisterData registerData) {
         if (isExistWithEmail(registerData.getEmail())) {
@@ -77,7 +75,7 @@ public class DBOperations {
      * @param contactData The contact data to be added.
      * @param id          The ID of the user to add the contact to.
      */
-    public void addContact(ContactData contactData, int id) {
+    public void addContact(ContactData contactData, long id) {
         long ids = id;
 
         Users user = userRepository.findById(ids).orElse(null);
@@ -103,7 +101,7 @@ public class DBOperations {
      *
      * @param email The email address of the user to retrieve the username for.
      * @return The username of the user with the specified email address, or null if
-     *         no user is found.
+     * no user is found.
      */
     public String getUsername(String email) {
         Users users = userRepository.findByEmail(email);
@@ -118,7 +116,7 @@ public class DBOperations {
      *
      * @param email The email address of the user to retrieve.
      * @return The user object with the specified email address, or null if no user
-     *         is found.
+     * is found.
      */
     public Users getUsers(String email) {
         Users users = userRepository.findByEmail(email);
@@ -133,20 +131,49 @@ public class DBOperations {
      */
     public boolean updateUser(Users users) {
         Users user = userRepository.findByEmail(users.getEmail());
-        // if (user != null) {
-            user.setName(users.getName());
-            user.setEmail(users.getEmail());
-            user.setPassword(users.getPassword());
-            user.setAbout(users.getAbout());
-        // }
-        // System.out.println(
-        // "\n\n#############\nEnter into DBOperation\nname: " + users.getName() +
-        // "\nemail: " + users.getEmail()
-        // + "\npassword: " + users.getPassword() + "\nabout: " + users.getAbout() +
-        // "\n\n" + "\nID: "
-        // + users.getUser_id() + "\n\n");
+        user.setName(users.getName());
+        user.setEmail(users.getEmail());
+        user.setPassword(users.getPassword());
+        user.setAbout(users.getAbout());
 
         userRepository.save(user);
         return false;
+    }
+
+    public long getUserId(String email) {
+        return userRepository.findByEmail(email).getUser_id();
+    }
+
+    public List<Contact> showContact(long id) {
+        List<Contact> contacts = contactRepository.findContactsByUserId(id);
+        if (contacts.isEmpty()) {
+            return null;
+        }
+        return contacts;
+    }
+
+    public Contact getContact(long id) {
+        Contact contact = contactRepository.findByContactId(id);
+        return contact;
+    }
+
+    public void updateContact(Contact contact) {
+
+        System.out.println("\n\n##########\ninDB\nname:" + contact.getName() + "\nemail:" + contact.getEmail() + "\nID:" + contact.getContact_id());
+
+        Contact contact2 = contactRepository.findByContactId(contact.getContact_id());
+        contact2.setName(contact.getName());
+
+        contact2.setNumber(contact.getNumber());
+        contact2.setEmail(contact.getEmail());
+        contact2.setAbout(contact.getAbout());
+        contact2.setImage_url(contact.getImage_url());
+        System.out.println("\n\n##########   contact2\nname:" + contact2.getName() + "\nemail:" + contact2.getEmail());
+        contactRepository.save(contact2);
+    }
+
+    public void deleteContact(Long id) {
+
+        contactRepository.deleteById(id);
     }
 }

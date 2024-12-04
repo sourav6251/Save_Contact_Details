@@ -1,10 +1,11 @@
 package com.contact.controller;
 
+import com.contact.db.Contact;
 import com.contact.dto.LoginData;
 import com.contact.dto.RegisterData;
 import com.contact.operation.DBOperations;
+import com.contact.operation.UserOperation;
 import com.contact.service.SessionOperation;
-
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class NotSecureController {
 
     @Autowired
+    UserOperation userOperation;
+    @Autowired
     private DBOperations dbOperations;
-
     @Autowired
     HttpSession httpSession;
-
     @Autowired
     SessionOperation sessionOperation;
 
@@ -36,37 +37,30 @@ public class NotSecureController {
         String name = (String) httpSession.getAttribute("name");
         model.addAttribute("name", name);
 
-
         return "home";
     }
 
+    @PostMapping("/login_process")
+    public void postMethodName(Model model, @ModelAttribute("user") LoginData loginData) {
+
+        String username = loginData.getEmail();
+        String password = loginData.getPassword();
+        System.out.println("\n\n\n##########\n Email" + username + "\n Password" + password + "\n\n\n");
+    }
+
     @GetMapping("/login")
-    public String loginPage(@RequestParam(value = "error", required = false) String customError, Model model,@ModelAttribute("user") LoginData loginData) {
+    public String loginPage(@RequestParam(value = "error", required = false) String customError, Model model, @ModelAttribute("user") LoginData loginData) {
         if (customError == "invalid_credentials") {
             model.addAttribute("error", "Invalid username or password.");
-        }
-        else if (  customError != null) {
-            
+        } else if (customError != null) {
+
             model.addAttribute("error", "Invalid username or password.");
         }
         return "login";
     }
 
-    // @PostMapping("/login_process")
-    // public String login(@Valid @ModelAttribute("user") LoginData loginData, BindingResult result, Model model) {
-    //     if (result.hasErrors()) {
-    //         return "login";
-    //     }
-    //     boolean isAuthenticated = dbOperations.authenticate(loginData.getEmail(), loginData.getPassword());
-    //     if (!isAuthenticated) {
-    //         model.addAttribute("loginError", "Invalid email or password.");
-    //         return "login";
-    //     }
-    //     return "redirect:/profile";
-    // }
-
     @GetMapping("/register")
-    public String registerPage(@ModelAttribute("user") RegisterData registerData,Model model) {
+    public String registerPage(@ModelAttribute("user") RegisterData registerData, Model model) {
 
         String name = (String) httpSession.getAttribute("name");
         model.addAttribute("name", name);
@@ -75,16 +69,15 @@ public class NotSecureController {
     }
 
     @PostMapping("/registered")
-    public String registered(@Valid @ModelAttribute("user") RegisterData registerData, BindingResult result,
-            Model model) {
+    public String registered(@Valid @ModelAttribute("user") RegisterData registerData, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "register";
         }
-        String operation = dbOperations.register(registerData);
+        String operation = userOperation.addUserInDB(registerData);//dbOperations.register(registerData);
 
         switch (operation) {
             case "email":
-                model.addAttribute("Error", "Email already exists. Please try another.");
+                model.addAttribute("Error", "Email already exists.");
                 break;
             case "success":
                 return "redirect:/home";
@@ -93,19 +86,16 @@ public class NotSecureController {
                 break;
         }
 
-        model.addAttribute("message", "Please register again.");
+        model.addAttribute("message", "Please try with another email.");
         return "register";
     }
 
-    @GetMapping("/profile")
-    public String profile(@Valid @ModelAttribute("user") LoginData loginData, BindingResult result,Model model) {
-        
-        // boolean isLogin=sessionOperation.isLogin();
-        model.addAttribute("isLogin", false);
 
-        if (result.hasErrors()) {
-            return "login";
-        }
-        return "profile"; 
+    @GetMapping("/check")
+    public String getMethodName(Model model) {
+        Contact users = new Contact();
+        model.addAttribute("users", users);
+        return "profileReplace";
     }
+
 }

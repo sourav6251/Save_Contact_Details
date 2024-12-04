@@ -16,6 +16,8 @@ public class SessionOperation {
     DBOperations dbOperations;
     @Autowired
     private HttpSession session;
+    @Autowired
+    SendMail sendMail;
 
     /**
      * Add user name in session
@@ -27,6 +29,9 @@ public class SessionOperation {
             String email = authentication.getName();
             if (email !=null) {
                 String name = dbOperations.getUsername(email);
+                if (session.getAttribute("name") == null) {
+                    sendMail.loginMail(email, "Login", "You are login in your account");
+                }
                 session.setAttribute("name", name);
                 
             } else {
@@ -62,12 +67,12 @@ public class SessionOperation {
         return null;
     }
 
-    // public long getUserId() {
-    //     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    //     if (authentication != null && authentication.isAuthenticated()) {
-    //         return dbOperations.getUserId(authentication.getName());
-    //     }
-    //     return 0;
-    // }
+    public long getUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            return dbOperations.getUserId(authentication.getName());
+        }
+        return 0;
+    }
 
 }
