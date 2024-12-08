@@ -3,6 +3,7 @@ package com.contact.operation;
 import com.contact.db.Contact;
 import com.contact.db.Users;
 import com.contact.dto.ContactData;
+import com.contact.dto.Password;
 import com.contact.dto.RegisterData;
 import com.contact.repository.ContactRepository;
 import com.contact.repository.UserRepository;
@@ -151,7 +152,7 @@ public class DBOperations {
         }
         return contacts;
     }
-
+ 
     public Contact getContact(long id) {
         Contact contact = contactRepository.findByContactId(id);
         return contact;
@@ -173,7 +174,34 @@ public class DBOperations {
     }
 
     public void deleteContact(Long id) {
-
         contactRepository.deleteById(id);
     }
+
+    public String getPasswordByEmail(String email){
+       
+        return userRepository.findPasswordByEmail(email);
+    }
+
+    public String getPasswordById(Long id){
+        return userRepository.findPasswordByUserId(id);
+    }
+
+    public String changePassword(Password password,Long id) {
+        Users user = userRepository.findByUserId(id);
+        System.out.println("Enter into Change password: " + user.getEmail());
+        if (user != null) {
+            user.setPassword(password.getNewPassword());
+            userRepository.save(user);
+            return "success";
+        }
+        System.out.println("Enter into Change password: "+user.getEmail());
+        return "email";
+
+    }
+    
+    public void deleteUser(long id) {
+        userRepository.deleteById(id);
+    }
+
 }
+

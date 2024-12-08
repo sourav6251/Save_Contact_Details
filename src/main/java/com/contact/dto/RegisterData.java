@@ -1,6 +1,7 @@
 package com.contact.dto;
 
 import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class RegisterData {
@@ -11,6 +12,7 @@ public class RegisterData {
     @Size(min = 5, max = 50)
     public String email;
     @Size(min = 5, max = 20)
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{5,20}$", message = "Password must contain at least one uppercase letter, one digit, and one special character")
     public String password;
     @AssertTrue
     public boolean check;

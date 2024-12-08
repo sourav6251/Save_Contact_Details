@@ -33,6 +33,7 @@ public class SessionOperation {
                     sendMail.loginMail(email, "Login", "You are login in your account");
                 }
                 session.setAttribute("name", name);
+                session.setAttribute("ID", dbOperations.getUserId(email));
                 
             } else {
                 
@@ -67,12 +68,12 @@ public class SessionOperation {
         return null;
     }
 
-    public long getUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            return dbOperations.getUserId(authentication.getName());
-        }
-        return 0;
-    }
+    // public long getUserId() {
+    //     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    //     if (authentication != null && authentication.isAuthenticated()) {
+    //         return dbOperations.getUserId(authentication.getName());
+    //     }
+    //     return 0;
+    // }
 
 }

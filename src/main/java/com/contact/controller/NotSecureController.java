@@ -3,7 +3,6 @@ package com.contact.controller;
 import com.contact.db.Contact;
 import com.contact.dto.LoginData;
 import com.contact.dto.RegisterData;
-import com.contact.operation.DBOperations;
 import com.contact.operation.UserOperation;
 import com.contact.service.SessionOperation;
 import jakarta.servlet.http.HttpSession;
@@ -23,8 +22,6 @@ public class NotSecureController {
     @Autowired
     UserOperation userOperation;
     @Autowired
-    private DBOperations dbOperations;
-    @Autowired
     HttpSession httpSession;
     @Autowired
     SessionOperation sessionOperation;
@@ -32,21 +29,33 @@ public class NotSecureController {
     @GetMapping("/home")
     public String home(Model model) {
 
-        sessionOperation.addUserNameInSession();
+
 
         String name = (String) httpSession.getAttribute("name");
         model.addAttribute("name", name);
+        if (name == null) {
+             model.addAttribute("log", "logout");
+        }
+        else {
+            model.addAttribute("log", "login");
+        }
 
         return "home";
     }
+    @GetMapping("/newHome")
+    public String getMethodName() {
 
-    @PostMapping("/login_process")
-    public void postMethodName(Model model, @ModelAttribute("user") LoginData loginData) {
-
-        String username = loginData.getEmail();
-        String password = loginData.getPassword();
-        System.out.println("\n\n\n##########\n Email" + username + "\n Password" + password + "\n\n\n");
+        sessionOperation.addUserNameInSession();
+        return "redirect:/home";
     }
+    
+
+    // @PostMapping("/login_process")
+    // public void postMethodName(Model model, @ModelAttribute("user") LoginData loginData) {
+    //     String username = loginData.getEmail();
+    //     String password = loginData.getPassword();
+    //     System.out.println("\n\n\n##########\n Email" + username + "\n Password" + password + "\n\n\n");
+    // }
 
     @GetMapping("/login")
     public String loginPage(@RequestParam(value = "error", required = false) String customError, Model model, @ModelAttribute("user") LoginData loginData) {
@@ -56,6 +65,8 @@ public class NotSecureController {
 
             model.addAttribute("error", "Invalid username or password.");
         }
+
+        model.addAttribute("log", "logout");
         return "login";
     }
 
@@ -73,7 +84,7 @@ public class NotSecureController {
         if (result.hasErrors()) {
             return "register";
         }
-        String operation = userOperation.addUserInDB(registerData);//dbOperations.register(registerData);
+        String operation = userOperation.addUserInDB(registerData);
 
         switch (operation) {
             case "email":
@@ -95,7 +106,11 @@ public class NotSecureController {
     public String getMethodName(Model model) {
         Contact users = new Contact();
         model.addAttribute("users", users);
+        model.addAttribute("userContact",new Contact());
         return "profileReplace";
     }
-
+    @GetMapping("/nothing")
+    public String nothing() {
+        return null;
+    }
 }

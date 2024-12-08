@@ -1,9 +1,14 @@
 package com.contact.operation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.contact.db.Contact;
 import com.contact.db.Users;
+import com.contact.dto.ContactData;
+import com.contact.dto.Password;
 import com.contact.dto.RegisterData;
 import com.contact.service.SendMail;
 import com.contact.service.SessionOperation;
@@ -68,5 +73,74 @@ public class UserOperation {
         return operation;
     }
 
+    public void addUserNameInSession(){
+        sessionOperation.addUserNameInSession();
+    }
 
+    public void updateUser(Users users){
+        dbOperations.updateUser(users);
+    }
+
+    public String getSessionName(){
+        return (String) httpSession.getAttribute("name");
+    }
+
+    public List<Contact> getContact(){
+        return dbOperations.showContact((Long)httpSession.getAttribute("ID"));
+    }
+
+    public void addContact(ContactData contactData){
+        dbOperations.addContact(contactData, (Long) httpSession.getAttribute("ID"));
+    }
+
+    public Contact getContactById(Long id){
+        return dbOperations.getContact(id);
+    }
+
+    public void updateContact(Contact contact){
+        dbOperations.updateContact(contact);
+    }
+
+    /**
+     * Deletes a contact from the database by the given contact ID.
+     *
+     * @param id the ID of the contact to be deleted
+     */
+    public void deleteContact(Long id){
+        dbOperations.deleteContact(id);
+    }
+
+    /**
+     * Removes the "name" attribute from the HTTP session.
+     * */
+    public void removeSession(){
+        httpSession.removeAttribute("name");
+    }
+
+    /**
+     * Changes the password for the current user.
+     *
+     * @param password an object containing the new password and confirmation password
+     * @return "samePassword" if the new password is the same as the current password,
+     *         "notSame" if the new password and confirmation password do not match,
+     *         "passwordNotMatch" if the new password and confirmation password do not match,
+     *         "true" if the password was successfully changed
+     */
+    public String changePassword(Password password){
+        if (dbOperations.getPasswordById((Long)httpSession.getAttribute("ID")).equals(password.getNewPassword())) {
+           return "samePassword";
+        }
+        else if (!password.getNewPassword().equals(password.getConfirmPassword())) {
+            return "notSame";
+        }
+
+        dbOperations.changePassword(password,(Long) httpSession.getAttribute("ID"));
+        return "success";
+    }
+
+
+    public String deleteUser(){
+        dbOperations.deleteUser((Long) httpSession.getAttribute("ID"));
+        return "success";
+    }
 }

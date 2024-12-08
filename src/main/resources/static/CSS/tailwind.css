@@ -8,6 +8,7 @@
 @import url(./output.css);
 @import url(./register.css);
 @import "/CSS/login.css";
+
 .b-image {
   background-image: url(/Image/loginBackground.jpg);
   background-position: center;
@@ -20,6 +21,7 @@ body {
   width: 100vw;
   background-color: rgba(89, 143, 143, 0.397);
 }
+
 /* General reset */
 * {
   padding: 0;
@@ -29,7 +31,8 @@ body {
 
 /* Navbar styling */
 #nav {
-  background-color: rgba(60, 71, 80, 0.795); /* Dark green with transparency */
+  background-color: rgba(60, 71, 80, 0.795);
+  /* Dark green with transparency */
   height: 3rem;
   width: 100%;
   position: sticky;
@@ -43,6 +46,7 @@ body {
 a {
   text-decoration: none;
 }
+
 .flex {
   display: flex;
 }
@@ -64,18 +68,22 @@ a {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
 /* Profile Styles */
 #profile {
   background-color: white;
   color: black;
   padding: 20px;
   position: fixed;
-  top: 20px; /* Add some spacing from the top for better visibility */
+  top: 20px;
+  /* Add some spacing from the top for better visibility */
   left: 50%;
-  transform: translateX(-50%); /* Center the profile horizontally */
+  transform: translateX(-50%);
+  /* Center the profile horizontally */
   z-index: 10;
   width: 40%;
-  max-width: 400px; /* Ensure the profile card doesn't stretch too much on large screens */
+  max-width: 400px;
+  /* Ensure the profile card doesn't stretch too much on large screens */
   height: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -95,7 +103,8 @@ a {
 
 #profile #photo div {
   background-color: aquamarine;
-  border-radius: 50%; /* Ensure it's fully circular */
+  border-radius: 50%;
+  /* Ensure it's fully circular */
   height: 90%;
   width: 50%;
 }
@@ -143,21 +152,26 @@ a {
 /* Media Queries for Mobile/Tablet responsiveness */
 @media (max-width: 768px) {
   #profile {
-    width: 90%; /* Use 90% width on smaller screens for better layout */
+    width: 90%;
+    /* Use 90% width on smaller screens for better layout */
     left: 50%;
     transform: translateX(-50%);
-    top: 10px; /* Add some top margin */
-    padding: 15px; /* Reduce padding on smaller screens */
+    top: 10px;
+    /* Add some top margin */
+    padding: 15px;
+    /* Reduce padding on smaller screens */
   }
 
   #profile #photo {
     height: 8rem;
-    margin-top: 2rem; /* Adjust the margin on mobile */
+    margin-top: 2rem;
+    /* Adjust the margin on mobile */
   }
 
   #profile #photo div {
     height: 60%;
-    width: 60%; /* Ensure the profile picture stays proportional */
+    width: 60%;
+    /* Ensure the profile picture stays proportional */
   }
 
   #profile #name {
@@ -167,15 +181,71 @@ a {
 
   #profile #name #field {
     height: auto;
-    padding-left: 0.5rem; /* Reduce padding on smaller screens */
+    padding-left: 0.5rem;
+    /* Reduce padding on smaller screens */
   }
 
   #profile #name #field #names {
-    font-size: 1rem; /* Adjust font size for mobile */
+    font-size: 1rem;
+    /* Adjust font size for mobile */
   }
 
   #profile #name #title {
-    font-size: 1rem; /* Adjust font size */
-    margin-left: 0.5rem; /* Adjust left margin */
+    font-size: 1rem;
+    /* Adjust font size */
+    margin-left: 0.5rem;
+    /* Adjust left margin */
   }
+}
+
+.styleSpan1 {
+  background: linear-gradient(to right,
+      rgb(110, 62, 62),
+      rgb(158, 65, 41),
+      rgb(223, 19, 12));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.styleSpan2 {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: medium;
+  font-weight: 700;
+}
+
+#navlogo {
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Center the name in the navbar */
+.navbar-center {
+  text-align: center;
+  color: rgb(175, 53, 53);
+  font-weight: bold;
+  font-size: 18px;
+  /* Ensure it is aligned in the center */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-10%);
+}
+
+.error-message {
+  color: #ff1a1a;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  background-color: #ffe6e6;
+  border: 1px solid #ff4d4d;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.6rem 1.5rem;
 }

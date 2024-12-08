@@ -1,5 +1,8 @@
 package com.contact.db;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +26,7 @@ public class Contact {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)  // Add this annotation
     private Users user;
 
     public long getContact_id() {

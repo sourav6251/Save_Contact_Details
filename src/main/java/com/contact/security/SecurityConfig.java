@@ -6,6 +6,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.security.config.Customizer;
 
 @Configuration
@@ -26,12 +32,12 @@ public class SecurityConfig {
 
                 )
 
-                //TODO  Custom login
+                // TODO Custom login
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login_process")
                         .failureUrl("/login?error=true")
-                        .defaultSuccessUrl("/home", true)
+                        .defaultSuccessUrl("/newHome", true)
                         .passwordParameter("password")
                         .usernameParameter("email")
                         .failureHandler((request, response, exception) -> {
@@ -39,8 +45,8 @@ public class SecurityConfig {
                             response.sendRedirect("/login?error=invalid_credentials");
                         })
                         .permitAll())
-                
-                //TODO Custom logout
+
+                // TODO Custom logout
                 .logout(logout -> logout
                         .logoutUrl("/user/logout")
                         .logoutSuccessUrl("/login")
@@ -56,4 +62,12 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    // private LogoutHandler customLogoutHandler() {
+    //     return (HttpServletRequest request, HttpServletResponse response, HttpSession session) -> {
+    //         if (session != null) {
+    //             session.removeAttribute("name");
+    //         }
+    //     };
+    // }
 }

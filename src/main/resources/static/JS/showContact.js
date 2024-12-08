@@ -40,3 +40,50 @@ document.addEventListener("DOMContentLoaded", () => {
     contactModal.classList.add("hidden");
   });
 });
+
+let count = "details";
+// Modify the details() function
+async function details() {
+  if (count == "details") {
+    try {
+      // Fetch the content from profileDetailsEdit
+      const response = await fetch("/user/profileDetailsEdit");
+      const html = await response.text();
+
+      // Update the profile details section
+      const profileDetailsDiv = document.getElementById("profileDetails");
+      profileDetailsDiv.innerHTML = html;
+    } catch (error) {
+      console.error("Error fetching profile details:", error);
+    }
+    count = "edit";
+  } else if (count == "edit") {
+    try {
+      // Initial load with regular profile details
+      const response = await fetch("/user/profileDetails");
+      await fetch("../JS/profilePhoto.js");
+      const html = await response.text();
+      add(html);
+    } catch (error) {
+      console.error("Error loading initial profile:", error);
+    }
+    count = "details";
+  }
+}
+
+// Modify the initial DOMContentLoaded event listener
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    // Initial load with regular profile details
+    const response = await fetch("/user/profileDetails");
+    const html = await response.text();
+    add(html);
+  } catch (error) {
+    console.error("Error loading initial profile:", error);
+  }
+});
+
+function add(html) {
+  const profileDetailsDiv = document.getElementById("profileDetails");
+  profileDetailsDiv.innerHTML = html;
+}

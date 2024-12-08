@@ -5,89 +5,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../CSS/output.css" rel="stylesheet">
-    <title>Responsive Navbar</title>
-    <style>
-        /* Add additional styles if necessary */
-        #logo {
-            height: 36px;
-            width: 36px;
-            background-color: green;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        /* Center the name in the navbar */
-        .navbar-center {
-            text-align: center;
-            color: rgb(175, 53, 53);
-            font-weight: bold;
-            font-size: 18px;
-            /* Ensure it is aligned in the center */
-            position: absolute;
-            left: 50%;
-            transform: translateX(-10%);
-        }
-    </style>
+    <script src="../JS/profile.js"></script>
+    <script src="../JS/nav.js"></script>
+    <title>Navbar</title>
 </head>
 
 <body>
     <!-- Navbar -->
     <nav th:fragment="navbar" id="nav" class="bg-green-900 h-12 sticky top-0 flex items-center px-4 z-20">
         <!-- Logo/Left Section -->
-        <div class="h-full flex items-center">
-            <a href="/user/profile">
-                <div id="logo" class="h-9 w-9 bg-green-700 rounded-full flex justify-center items-center">
-                    <!-- Placeholder for logo -->
-                    <span class="text-white font-semibold text-xl">L</span> <!-- Logo Text -->
-                </div>
-            </a>
+        <div class="h-full flex items-center" id="navLogo" onclick="details()">
+            <div id="navlogo" class="h-9 w-9 
+             rounded-full flex justify-center items-center">
+                <img src="../icon/logo.svg" alt="">
+            </div>
         </div>
 
         <!-- User's Name in the Center -->
-        <div class="navbar-center text-green-800" th:text="${name}"></div>
-
-        <!-- Mobile Menu Toggle -->
-        <!-- <div class="ml-auto sm:hidden flex items-center">
-            <button id="menu-toggle" class="text-white focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
-            </button>
-        </div> -->
+        <div class="navbar-center font-bold text-3xl" style="background: linear-gradient(to right, rgb(110, 62, 62), rgb(158, 65, 41), rgb(223, 19, 12)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;" th:text="${session.name}">
+        </div>
 
         <!-- Links Section -->
-        <div id="nav-links"
-        
+        <div id="nav-links" class="hidden sm:flex items-center space-x-4 
+                 bg-green-900 sm:bg-transparent absolute sm:static 
+                 top-12 left-0 w-14 sm:w-auto sm:py-0 py-2 px-4">
 
-            class="hidden sm:flex items-center space-x-4  bg-green-900 sm:bg-transparent absolute sm:static top-12 left-0 w-14 sm:w-auto sm:py-0 py-2 px-4">
-            <div  th:if= "${isLogin}"> <!-- Content only visible to logged out users -->
-                <a href="/login" class="text-white text-sm hover:underline block sm:inline">LOGIN</a>
-            </div>
-            <div th:text="${isLogin}"></div>
-            <!-- Content only visible to logged in users -->
-            <!-- <div th:if= "${isLogin}"> 
-                <a href="/user/logout" class="text-white text-sm hover:underline block sm:inline">LOGOUT</a>
-            </div> -->
-            <a href="/register" class="text-white text-sm hover:underline block sm:inline">SIGNUP</a>
+            <span class=" hidden" id="log" th:text="${log}"></span>
+            <a href="/login" style=" display: none;" class="text-white text-sm hover:underline block sm:inline"
+                id="login">Login</a>
+            <a href="/user/logout" style="display: none; " class="text-white text-sm hover:underline block sm:inline"
+                id="logout">Logout</a>
             <a href="/home" class="text-white text-sm hover:underline block sm:inline">ABOUT</a>
         </div>
     </nav>
 
     <!-- Profile Section (Thymeleaf Fragment) -->
-    <div th:replace="profile :: profile"></div>
+    <!-- <div th:replace="profile :: profile"></div> -->
 
     <!-- Main Content -->
-    <div class="flex-grow flex flex-col md:flex-row pt-12"> <!-- Added pt-12 to prevent overlap with navbar -->
-        <!-- Contact Form Container -->
+    <div class="flex-grow flex flex-col md:flex-row pt-12">
+
         <div
             class="flex-grow flex items-center justify-center px-4 mt-10 md:mt-0 ml-0 md:ml-[25%] lg:ml-[20%] xl:ml-[16%]">
             <div class="bg-white shadow-lg rounded-lg w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 p-6">
                 <form th:action="@{/submit-contact}" th:method="post" class="space-y-6" th:object="${user}">
-                    <!-- Form fields here -->
+
                 </form>
             </div>
         </div>

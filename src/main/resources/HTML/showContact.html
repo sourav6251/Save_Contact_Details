@@ -7,7 +7,7 @@
     <title>Contact</title>
     <link href="../CSS/output.css" rel="stylesheet">
     <script src="../JS/showContact.js"></script>
-
+    <script src="../JS/nav.js"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -16,8 +16,6 @@
 
 
     <!-- Popup Modal Start -->
-
-    <!-- Modal -->
     <div id="contactModal" class="hidden fixed inset-0  bg-opacity-55 justify-center items-center ">
         <div class=" bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
             <!-- Modal Header -->
@@ -34,7 +32,14 @@
 
     <!-- Main Container -->
     <div class="flex flex-row h-[90vh]">
-        <div th:replace="profileReplace::profileDetails"></div>
+
+
+        <!-- <div th:replace="profileReplace::profileDetails"></div> -->
+        <div class=" h-full w-2/5" id="profileDetails">
+            <!-- <div th:replace="profileReplace::profileDetails"></div> -->
+        </div>
+
+
         <!-- Contacts List -->
         <div class="w-3/5 bg-white rounded-3xl shadow-lg p-6 ml-4 overflow-y-auto">
             <div class="flex w-full h-11 justify-between">
