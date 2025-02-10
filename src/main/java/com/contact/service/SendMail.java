@@ -22,10 +22,19 @@ public class SendMail {
     }
 
     public void registeredMail(String email, String subject, String message) {
-        sendMail(email,subject,message);
+        try {
+            sendMail(email, subject, message);
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 
-    public void loginMail(String email, String subject, String message) { 
-        sendMail(email,subject,message);
+    public void loginMail(String email, String subject, String message) {
+        try {
+            sendMail(email, subject, message);
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 }
